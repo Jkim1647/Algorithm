@@ -3,7 +3,7 @@ import java.util.*;
 
 class Solution {
     boolean solution(String s) {
-        boolean answer = true;
+        boolean answer;
 
         Deque<Character> q = new ArrayDeque<>();
         
@@ -12,7 +12,6 @@ class Solution {
             
             if(c == '('){
                 q.add(c);
-                //System.out.println("asd");
             }else{
                 if(!q.isEmpty()){
                     if(q.peekLast() == '('){
@@ -21,20 +20,12 @@ class Solution {
                 }else{
                     q.add(c);    
                 }
-                
-                //answer = false;
-                //System.out.println("qqq");
             }
-            
-            //System.out.println(c);
         }
         answer = true;
         if(!q.isEmpty()){
             answer = false;
         }
-
-        // [실행] 버튼을 누르면 출력 값을 볼 수 있습니다.
-        //System.out.println("Hello Java");
 
         return answer;
     }
