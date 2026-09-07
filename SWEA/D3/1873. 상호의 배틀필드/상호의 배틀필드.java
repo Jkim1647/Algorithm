@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.util.*;
 
@@ -57,40 +56,20 @@ public class Solution {
 					}
 				}
 			}
-			/*
-			System.out.println();
-			for(int i=0;i<N;i++) {
-				for(int j=0;j<M;j++) {
-					System.out.printf("%d ",map[i][j]);
-				}
-				System.out.println();
-			}
-			System.out.println();
-			*/
+
 			
 			w = Integer.parseInt(br.readLine());
 			String command = br.readLine();
 			
 			for(int i=0;i<w;i++) {
-				//System.out.printf("i=%d, state=%d \n",i,state);
 				move(command.charAt(i));
 			}
-			
-			/*
-			for(int i=0;i<N;i++) {
-				for(int j=0;j<M;j++) {
-					System.out.printf("%d ",map[i][j]);
-				}
-				System.out.println();
-			}*/
-			
-			
+
 			sb.append("#"+test_case+" ");
 			
 			for(int i=0;i<N;i++) {
 				for(int j=0;j<M;j++) {
 					if(map[i][j] == 0) {
-						//System.out.printf(". ");
 						sb.append(".");
 					}else if(map[i][j] == 1) {
 						sb.append("*");
@@ -160,22 +139,8 @@ public class Solution {
 					cy = ny;
 				}				
 			}
-		}
-		
-/*
-		for(int i=0;i<N;i++) {
-			for(int j=0;j<M;j++) {
-				System.out.printf("%d ",map[i][j]);
-			}
-			System.out.println();
-		}
-		System.out.printf("after state=%d \n",state);
-		System.out.println();
-		*/
-		
+		}		
 	}
-
-	
 }
 
 /*
@@ -197,7 +162,3 @@ v	아래쪽을 바라보는 전차(아래는 평지이다.)
 >	오른쪽을 바라보는 전차(아래는 평지이다.)
 
  */
-
-
-
-
