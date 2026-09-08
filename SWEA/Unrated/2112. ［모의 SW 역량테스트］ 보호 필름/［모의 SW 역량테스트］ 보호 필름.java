@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.util.*;
 
@@ -37,56 +36,16 @@ public class Solution {
 					map[i][j] = Integer.parseInt(st.nextToken());
 				}
 			}
-			/*
-			for(int i=0;i<N;i++) {
-				for(int j=0;j<M;j++) {
-					System.out.printf("%d ",map[i][j]);
-				}
-				System.out.println();
-			}
-			*/
 
-			//boolean test = cal();
-			//System.out.printf("test=%b \n",test);
-			//dfs2(0);
 			dfs(0);
 			
 			sb.append("#"+test_case+" "+result+"\n");
 		}
 		System.out.print(sb);
 	}
-
-	private static void dfs2(int depth) {
-		if(depth == N) {
-			int count = 0;
-			for(int i=0;i<N;i++) {
-				if(used[i] != 0) {
-					count++;
-				}
-			}
-			if(result != Integer.MAX_VALUE && result < count) {
-				
-			}
-			System.out.println(Arrays.toString(used));
-			
-			return;
-		}
-		used[depth] = 0;
-		dfs2(depth+1);
-
-		used[depth] = 1;
-		dfs2(depth+1);
-		
-		used[depth] = 2;
-		dfs2(depth+1);
-		
-
-	}
 	
 	private static void dfs(int depth) {
 		if(depth == N) {
-			//System.out.println(Arrays.toString(used));
-			
 			int count = 0;
 			for(int i=0;i<N;i++) {
 				if(used[i] != 0) {
@@ -110,7 +69,6 @@ public class Solution {
 						map[i][j] = map_back[i][j];
 					}
 				}
-				//System.out.println(find);
 				
 				if(find == true) { // 테스트 통과 하면
 					int result_count = 0;
@@ -120,16 +78,9 @@ public class Solution {
 						}
 					}
 					result = Math.min(result, result_count);
-					if(result == 1) {
-						//System.out.println(Arrays.toString(used));
-						
-					}
 				}
 				
 			}
-			
-			
-			
 			return;
 		}
 		used[depth] = 0;
@@ -140,8 +91,6 @@ public class Solution {
 		
 		used[depth] = 2;
 		dfs(depth+1);
-		
-
 	}
 
 	private static void change() {
@@ -153,25 +102,14 @@ public class Solution {
 					for(int j=0;j<M;j++) {
 						map[i][j] = 1;
 					}
-					//System.out.println("check1");
 				}else if(used[i] == 2) {
 					for(int j=0;j<M;j++) {
 						map[i][j] = 0;
 					}
-					//System.out.println("check2");
 				}
 			}
 			
 		}
-		/*
-		
-		for(int i=0;i<N;i++) {
-			for(int j=0;j<M;j++) {
-				System.out.printf("%d ",map[i][j]);
-			}
-			System.out.println();
-		}
-		*/
 	}
 	
 	private static boolean cal() {
@@ -183,13 +121,11 @@ public class Solution {
 			int safe_flag = 0;
 			for(int i=0;i<N;i++) {
 				if(map[i][j] == 0) {
-					//System.out.print('A');
 					row_count0++;
 					row_count1 = 0;
 				}else {
 					row_count1++;
 					row_count0 = 0;
-					//System.out.print('B');
 				}
 				if(row_count1 >= K || row_count0 >= K) { //K개 이상 연속되면 나가기
 					safe_count++;
@@ -197,20 +133,14 @@ public class Solution {
 					break;
 				}
 			}
-			//System.out.printf("safe_count = %d \n",safe_count);
-			//System.out.printf("safe_flag = %d \n",safe_flag);
 			if(safe_flag == 0) {
 				break;
 			}
-			//System.out.println();
 		}
 		if(safe_count == M) {
-			//System.out.printf("safe_count = %d \n",safe_count);
 			return true;
 		}
 		return false;
-		
 	}
-	
 	
 }
