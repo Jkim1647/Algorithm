@@ -1,70 +1,76 @@
-import java.io.*;
 import java.util.*;
+import java.lang.*;
+import java.io.*;
 
-public class Solution {
+// The main method must be in a class named "Main".
+class Solution {
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringBuilder sb = new StringBuilder();
+    static StringTokenizer st;
 
-	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	static StringBuilder sb = new StringBuilder();
-	static StringTokenizer st;
-	
-	static int T,N;
-	static int[] arr;
-	static int result;
-	static int MAX;
-	
+    static int T,N;
+    static int arr[];
+
     public static void main(String[] args) throws Exception{
-    	T = Integer.parseInt(br.readLine());
-    	
-    	for(int tc=1;tc<=T;tc++) {
-    		N = Integer.parseInt(br.readLine());
-    		result = 0;
-    		arr = new int[N];
-    		MAX = 0;
-    		
-    		st = new StringTokenizer(br.readLine());
-    		for(int i=0;i<N;i++) {
-    			arr[i] = Integer.parseInt(st.nextToken());
-    			MAX = Math.max(MAX, arr[i]);
-    		}
 
-    		int one_count=0;
-    		int two_count=0;
-    		
-    		for(int i=0;i<N;i++) {
-    			int diff = MAX-arr[i];
-    			if(diff == 0) {
-    				
-    			}else {
-    				if(diff % 2 == 0) { // 짝수개
-    					two_count += diff/2;
-    				}else { // 홀수개
-    					two_count += diff/2;
-    					one_count++;
-    				}
-    			}
-    		}
-    		//System.out.printf("홀수:%d 짝수:%d \n",one_count,two_count);
-    		if(one_count < two_count) {
-    			int diff = two_count - one_count;
-    			while(diff>1) {
-    				one_count+=2;
-    				two_count-=1;
-    				diff = two_count - one_count;
-    			}
-    		}
-    		
-    		
-    		//System.out.printf("홀수:%d 짝수:%d \n\n",one_count,two_count);
-    		if(one_count > two_count) {
+        T = Integer.parseInt(br.readLine());
 
-                result = one_count * 2 - 1;
+        for(int tc=1;tc<=T;tc++){
 
-            } else {
+            N = Integer.parseInt(br.readLine());
+            arr = new int[N];
 
-                result = two_count * 2;
+            st = new StringTokenizer(br.readLine());
+            int max = 0;
+            for(int i=0;i<N;i++){
+                arr[i] = Integer.parseInt(st.nextToken());
+                max = Math.max(max,arr[i]);
             }
-    		sb.append("#"+tc+" "+result+"\n");
-    	}
-    	System.out.print(sb);
-	}
+
+            int one_count=0;
+            int two_count=0;
+            
+            for(int i=0;i<N;i++){
+                if((max-arr[i]) % 2 == 0){
+                    if((max-arr[i]) != 0){
+                        int temp = (max-arr[i])/2;
+                        two_count+=temp;
+                    }
+                }else{
+                    int temp = ((max-arr[i])-1)/2;
+                    two_count+=temp;
+                    one_count++;
+                }
+            }
+            //System.out.printf("tc=%d %d %d\n",tc,one_count,two_count);
+            
+            int result = 0;
+            if(one_count > two_count){
+                result = one_count*2 - 1;
+            }
+            else if(one_count == two_count){
+                result = one_count*2;
+            }
+            else if(one_count < two_count){
+                while(two_count - one_count > 1){
+                    two_count--;
+                    one_count+=2;
+                }
+                if(two_count == one_count){
+                    result = one_count*2;
+                }
+                if(two_count-one_count == 1){
+                    result = two_count*2;
+                }
+                if(one_count > two_count){
+                    result = one_count + two_count;
+                }
+            }
+            //System.out.printf("%d %d %d\n\n",one_count,two_count,result);
+
+            sb.append("#"+tc+" "+result+"\n");
+            
+        }
+        System.out.print(sb);
+    }
 }
