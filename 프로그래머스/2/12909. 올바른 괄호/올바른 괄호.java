@@ -1,31 +1,27 @@
-import java.io.*;
-import java.util.*;
-
 class Solution {
     boolean solution(String s) {
-        boolean answer;
+        boolean answer = true;
 
-        Deque<Character> q = new ArrayDeque<>();
+        int n = s.length();
+        //System.out.println(n);
         
-        for(int i=0;i<s.length();i++){
-            char c = s.charAt(i);
-            
-            if(c == '('){
-                q.add(c);
+        int count = 0;
+        
+        for(int i=0;i<n;i++){
+            if(s.charAt(i) == '('){
+                count++;
             }else{
-                if(!q.isEmpty()){
-                    if(q.peekLast() == '('){
-                        q.poll();
-                    }    
-                }else{
-                    q.add(c);    
-                }
+                count--;
+            }
+            if(count < 0){
+                answer = false;
             }
         }
-        answer = true;
-        if(!q.isEmpty()){
+        if(count != 0){
             answer = false;
         }
+
+        //System.out.println("Hello Java");
 
         return answer;
     }
