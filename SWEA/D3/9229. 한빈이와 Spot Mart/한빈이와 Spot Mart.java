@@ -3,81 +3,54 @@ import java.lang.*;
 import java.io.*;
 
 // The main method must be in a class named "Main".
-
-public class Solution {
+class Solution {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    static StringTokenizer st;
     static StringBuilder sb = new StringBuilder();
+    static StringTokenizer st;
 
     static int T;
-    static int result;
-    static int N,M;
+    static int N;
     static int[] arr;
-    static int[] visited;
-    
+    static int target;
+    static int result;
     public static void main(String[] args) throws Exception{
-        T = Integer.parseInt(br.readLine());
 
-        for(int test_case=1;test_case<=T;test_case++){
+       T = Integer.parseInt(br.readLine());
 
-            result = 0;
+        for(int tc=1;tc<=T;tc++){
             st = new StringTokenizer(br.readLine());
-
             N = Integer.parseInt(st.nextToken());
-            M = Integer.parseInt(st.nextToken());
+            target = Integer.parseInt(st.nextToken());
 
             arr = new int[N];
-            visited = new int[N];
+            result = -1;
             
             st = new StringTokenizer(br.readLine());
             for(int i=0;i<N;i++){
                 arr[i] = Integer.parseInt(st.nextToken());
-            }            
+            }
 
-            dfs(0,0,0);
-            if(result == 0){
-                result = -1;
+            Arrays.sort(arr);
+            //System.out.println(Arrays.toString(arr));
+
+            int start = 0;
+            int end = N-1;
+            while(end>start){
+                int sum = arr[start] + arr[end];
+                if(sum <= target){
+                    result = Math.max(result,sum);
+                }
+                
+                if(sum > target){
+                    end--;
+                }else{
+                    start++;
+                }
             }
             
-            sb.append("#")
-                .append(test_case)
-                .append(" ")
-                .append(result)
-                .append("\n");
+            sb.append("#"+tc+" "+result+"\n");
         }
         System.out.print(sb);
-    }
-    private static void dfs(int depth, int start,int count){
-
-        if(depth == 2){
-            
-            if(count <= M){
-                result = Math.max(result,count);
-            }
-            return;
-        }
-
-        for(int i=start;i<N;i++){
-
-            if(visited[i] == 1){
-                continue;
-            }
-            count += arr[i];
-            visited[i] = 1;
-            
-            dfs(depth+1,i,count);
-
-            count -= arr[i];
-            visited[i] = 0;
-        }
+        
     }
 }
-
-
-
-
-
-
-
-
-
