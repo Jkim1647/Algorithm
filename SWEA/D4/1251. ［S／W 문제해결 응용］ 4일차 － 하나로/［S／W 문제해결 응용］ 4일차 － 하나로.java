@@ -2,41 +2,13 @@ import java.io.*;
 import java.util.*;
 
 public class Solution {
-
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringBuilder sb = new StringBuilder();
 	static StringTokenizer st;
 	
 	static int T,N;
-	static double E,result;
-	
-	static ArrayList<Integer>[] list;
-	static int[] parent;
-	
-	static int find(int x) {
-		if(parent[x] < 0) return x;
-		return parent[x] = find(parent[x]);
-	}
-	
-	static boolean union(int a, int b) {
-		int fa = find(a);
-		int fb = find(b);
-		
-		if(fa == fb) {
-			return false;
-		}
-		
-		if(parent[fa] > parent[fb]) {
-			int temp = fa;
-			fa = fb;
-			fb = temp;
-		}
-		
-		parent[fa] += parent[fb];
-		parent[fb] = fa;		
-		
-		return true;
-	}
+	static int[] x,y;
+	static double E;
 	
 	public static void main(String[] args) throws Exception{
 		T = Integer.parseInt(br.readLine());
@@ -44,76 +16,63 @@ public class Solution {
 		for(int tc=1;tc<=T;tc++) {
 			N = Integer.parseInt(br.readLine());
 			
-			list = new ArrayList[N];
+			x = new int[N];
+			y = new int[N];
 			
+			st = new StringTokenizer(br.readLine());
 			for(int i=0;i<N;i++) {
-				list[i] = new ArrayList<>();
+				x[i] = Integer.parseInt(st.nextToken());
 			}
 			
 			st = new StringTokenizer(br.readLine());
 			for(int i=0;i<N;i++) {
-				list[i].add(Integer.parseInt(st.nextToken()));
-			}
-			
-			st = new StringTokenizer(br.readLine());
-			for(int i=0;i<N;i++) {
-				list[i].add(Integer.parseInt(st.nextToken()));
+				y[i] = Integer.parseInt(st.nextToken());
 			}
 			
 			E = Double.parseDouble(br.readLine());
 			
+			boolean visited[] = new boolean[N];
+			long[] minDist = new long[N];
 			
-			ArrayList<long[]> edges = new ArrayList<>();
+			Arrays.fill(minDist, Long.MAX_VALUE);
 			
-			for(int i=0;i<N;i++) {
-				for(int j=i+1;j<N;j++) {
-					int x1 = list[i].get(0);
-					int y1 = list[i].get(1);
-					
-					int x2 = list[j].get(0);
-					int y2 = list[j].get(1);
-					
-					long dx = x1 - x2;
-					long dy = y1 - y2;
-					
-					long cost = dx * dx + dy * dy;
-					
-					edges.add(new long[] {i,j,cost});
-				}
-			}
-			
-			edges.sort((a,b) -> Long.compare(a[2], b[2]));
-			
-			parent = new int[N];
-			Arrays.fill(parent, -1);
+			minDist[0] = 0;
 			
 			long sum = 0;
-			int cnt = 0;
 			
-			for(long[] edge : edges) {
-				int a = (int) edge[0];
-				int b = (int) edge[1];
-				long cost = edge[2];
+			for(int i=0;i<N;i++) {
+				long min = Long.MAX_VALUE;
+				int cur = -1;
 				
-				if(union(a,b)) {
-					sum += cost;
-					cnt++;
+				for(int j=0;j<N;j++) {
+					if(visited[j] == false && minDist[j] < min) {
+						min = minDist[j];
+						cur = j;
+					}
+				}
+				
+				visited[cur] = true;
+				sum += min;
+				
+				for(int next=0;next<N;next++) {
+					if(visited[next]) {
+						continue;
+					}
 					
-					if(cnt == N-1) {
-						break;
+					long dx = x[cur] - x[next];
+					long dy = y[cur] - y[next];
+					
+					long cost = dx*dx + dy*dy;
+					
+					if(cost < minDist[next]) {
+						minDist[next] = cost;
 					}
 				}
 			}
-			result = sum * E;
 			
-			sb.append("#"+tc+" "+Math.round(result)+"\n");
-			
+			long answer = Math.round(sum*E);
+			sb.append("#"+tc+" "+answer+"\n");
 		}
 		System.out.print(sb);
-		
-		
-		
 	}
-
 }
-
