@@ -1,0 +1,2 @@
+-- 코드를 ANIMAL_INS 
+SELECT * from ANIMAL_INS
